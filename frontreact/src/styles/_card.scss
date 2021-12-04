@@ -3,17 +3,27 @@
   flex-direction: column;
   justify-content: space-between;
   align-items: center;
-  width: 18rem;
-  background-color: $isis3710-white;
-  color: $isis3710-black;
+  width: 15rem;
+  background-color: white;
+  color: black;
   padding: 0.5rem;
   border-radius: 1rem;
   cursor: pointer;
-  border: 1px solid $isis3710-grey-10;
+  border: 1px solid grey;
 
-  &.inactive {
+  &-inactive {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
     filter: brightness(0.8) saturate(0) contrast(1.5) blur(1px);
     cursor: not-allowed;
+    width: 15rem;
+    background-color: white;
+    color: black;
+    padding: 0.5rem;
+    border-radius: 1rem;
+    border: 1px solid grey;
   }
 
   &-header {
@@ -33,7 +43,7 @@
   }
 
   &-img {
-    height: 21.875rem;
+    height: 15rem;
     max-width: 10.9375rem;
   }
 

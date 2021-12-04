@@ -5,6 +5,7 @@ const english = {
     report: 'Report',
     home: 'Home',
     gallery: 'Gallery',
+    units: 'Product units in inventory'
   },
 };
 

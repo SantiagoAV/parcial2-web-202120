@@ -1,13 +1,15 @@
 import React, { useEffect, useRef } from 'react';
 import * as d3 from 'd3';
 
-export const Chart = ({ width = 600, height = 600, data }) => {
+const Chart = ({ width = 600, height = 600, data }) => {
   const barChart = useRef();
 
   useEffect(() => {
     const margin = { top: 10, left: 50, bottom: 40, right: 10 };
     const iwidth = width - margin.left - margin.right;
     const iheight = height - margin.top - margin.bottom;
+
+    d3.select(barChart.current).select('g').remove();
 
     const svg = d3.select(barChart.current);
     svg.attr('width', width);
@@ -25,7 +27,42 @@ export const Chart = ({ width = 600, height = 600, data }) => {
       .range([0, iwidth])
       .padding(0.1);
 
-    // Continue with implementation. Don't forget the tooltip
+    const bars = g.selectAll("rect").data(data);
+    bars.enter().append("rect")
+      .attr("class", "bar")
+      .style("fill", "blue")
+      .attr("x", d => x(d.name))
+      .attr("y", d => y(d.stock))
+      .attr("height", d => iheight - y(d.stock))
+      .attr("width", x.bandwidth())  
+      .on('mouseover',hoverIn )
+      .on('mouseout', hoverOut)
+
+    g.append("g")
+      .classed("y--axis", true)
+      .call(d3.axisLeft(y));
+      
+    const tooltip = d3.select("body")
+      .append("tooltip")
+      .style("position", "absolute")
+      .style("opacity", 1);
+
+    function hoverIn(bar, product) { 
+      tooltip.transition()
+        .style('opacity', 1);
+
+      tooltip.html(`Hay ${product.stock} unidades de ${product.name}`)
+        .style('background-color', 'white')
+        .style('left', (bar.x + 30) + 'px')
+        .style('top', (bar.y + 30) + 'px')
+
+    }
+
+    function hoverOut() {
+      tooltip.transition()
+        .style('opacity', 0);
+    }
+
   });
 
   return (
@@ -34,3 +71,5 @@ export const Chart = ({ width = 600, height = 600, data }) => {
     </div>
   );
 };
+
+export default Chart;
